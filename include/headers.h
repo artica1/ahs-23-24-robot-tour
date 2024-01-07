@@ -1,11 +1,11 @@
 unsigned long prevMillis = 0;
 unsigned long startMillis = 0;
 
-unsigned int LEFT_MOUSE_CLOCK = 8;
-unsigned int LEFT_MOUSE_DATA = 9;
+const unsigned int LEFT_MOUSE_CLOCK = 8;
+const unsigned int LEFT_MOUSE_DATA = 9;
 
-unsigned int RIGHT_MOUSE_CLOCK = 12;
-unsigned int RIGHT_MOUSE_DATA = 11;
+const unsigned int RIGHT_MOUSE_CLOCK = 12;
+const unsigned int RIGHT_MOUSE_DATA = 11;
 
 /* Odometric calculation variables */
 float leftdxraw = 106;
@@ -37,13 +37,13 @@ float absoluteY = 0;
 float absoluteTheta = 0;
 
 /* Odometric calculation constants */
-int SENSOR_DISTANCE = 106;// Distance between two mouse sensors, in millimeters
-float MM_PER_COUNT = 0.2; // Number of millimeters corresponding to one count of the optical sensor
+const int SENSOR_DISTANCE = 106; // Distance between two mouse sensors, in millimeters
+const float MM_PER_COUNT = 0.2;  // Number of millimeters corresponding to one count of the optical sensor
 
 /* PID Tuning constants */
-float P_GAIN = 0;
-float I_GAIN = 0;
-float D_GAIN = 0;
+const float P_GAIN = 0;
+const float I_GAIN = 0;
+const float D_GAIN = 0;
 
 /* PID calulation variables */
 float PTerm = 0;
@@ -54,7 +54,7 @@ float integral = 0;
 float derivative = 0;
 
 /* General program and logic constants | All in milliseconds */
-unsigned int MOUSE_POLL_RATE = 30; // Delay between sensor data requests
-//unsigned int ODOMETRY_CALC_RATE = // Frequency at which to run odometry calculations to update locaton data
-unsigned int PID_ITERATION_RATE = 100; // Frequency of PID and path correction algorithm
-bool DYNAMIC_PID_RATE = false; //use when error exceeds something only; include min/max rate
+const unsigned int MOUSE_POLL_RATE = 30; // Delay between sensor data requests
+// const unsigned int ODOMETRY_CALC_RATE = // Frequency at which to run odometry calculations to update locaton data
+const unsigned int PID_ITERATION_RATE = 100; // Frequency of PID and path correction algorithm
+const bool DYNAMIC_PID_RATE = false;         // use when error exceeds something only; include min/max rate
