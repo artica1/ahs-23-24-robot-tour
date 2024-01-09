@@ -8,10 +8,10 @@ const unsigned int RIGHT_MOUSE_CLOCK = 12;
 const unsigned int RIGHT_MOUSE_DATA = 11;
 
 /* Odometric calculation variables */
-float leftdxraw = 106;
-float leftdyraw = 604;
-float rightdxraw = 101;
-float rightdyraw = 356;
+float leftdxraw = 0;
+float leftdyraw = 0;
+float rightdxraw = 0;
+float rightdyraw = 0;
 
 float dxmm = 0;
 float leftdymm = 0;
@@ -38,7 +38,7 @@ float absoluteTheta = 0;
 
 /* Odometric calculation constants */
 const int SENSOR_DISTANCE = 106; // Distance between two mouse sensors, in millimeters
-const float MM_PER_COUNT = 0.2;  // Number of millimeters corresponding to one count of the optical sensor
+const float MM_PER_COUNT = 0.1;    // Number of millimeters corresponding to one count of the optical sensor
 
 /* PID Tuning constants */
 const float P_GAIN = 0;

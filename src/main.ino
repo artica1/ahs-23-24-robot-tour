@@ -46,8 +46,8 @@ bool flushMouseData()
 bool convertMouseData()
 {
   dxmm = (leftdxraw + rightdxraw) / 2 * MM_PER_COUNT;
-  leftdymm = leftdyraw * MM_PER_COUNT;
-  rightdymm = rightdyraw * MM_PER_COUNT;
+  leftdymm = leftdyraw * MM_PER_COUNT * -1;
+  rightdymm = rightdyraw * MM_PER_COUNT * -1;
 
   return true;
 }
@@ -151,15 +151,6 @@ void setup()
 {
   Serial.begin(9600);
 
-  convertMouseData();
-  calculateDeltas();
-  calculatePosition();
-
-  Serial.println();
-  Serial.println(dx);
-  Serial.println(dy);
-  Serial.println(degrees(dTheta));
-
   if (leftmouse.initialise() != 0)
   {
     // mouse error
@@ -191,11 +182,10 @@ void loop()
 
   delay(2000);
 
-  // for (int i = 0; i <=2; i++) {
   flushMouseData();
 
-  leftservo.write(80);
-  rightservo.write(94);
+  leftservo.write(100);
+  rightservo.write(82);
 
   prevMillis = 0;
   startMillis = millis();
@@ -221,9 +211,7 @@ void loop()
   calculatePosition();
   // runPID();
   // updateMotorSpeeds();
-  // flushMouseData(); // test before and after updating speeds
-
-  //}
+  flushMouseData(); // test before and after updating speeds
 
   while (digitalRead(13) == HIGH)
   {
@@ -238,7 +226,7 @@ void loop()
   Serial.println();
   Serial.println(absoluteX);
   Serial.println(absoluteY);
-  Serial.println(absoluteTheta);
+  Serial.println(degrees(absoluteTheta));
 
   delay(2000);
 }
