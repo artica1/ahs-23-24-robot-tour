@@ -165,7 +165,7 @@ void setup()
     Serial.println("mouse error");
   };
 
-  pinMode(13, INPUT_PULLUP);
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
 
   leftservo.attach(5);
   leftservo.write(87);
@@ -176,7 +176,7 @@ void setup()
 
 void loop()
 {
-  while (digitalRead(13) == HIGH)
+  while (digitalRead(BUTTON_PIN) == HIGH)
   {
   }
 
@@ -213,7 +213,7 @@ void loop()
   // updateMotorSpeeds();
   flushMouseData(); // test before and after updating speeds
 
-  while (digitalRead(13) == HIGH)
+  while (digitalRead(BUTTON_PIN) == HIGH)
   {
   }
 
