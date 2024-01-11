@@ -228,20 +228,6 @@ bool driveStraight()
   return true;
 }
 
-bool driveStraight()
-{
-  setServoSpeeds(0, 0);
-  // tiny delay maybe?
-  flushMouseData();
-  setServoSpeeds(/* make nominal speed var */);
-
-
-  while (absoluteY)
-  {
-
-  }
-}
-
 void setup()
 {
   attachServos();
