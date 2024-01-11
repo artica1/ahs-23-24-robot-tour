@@ -9,6 +9,21 @@ PS2MouseHandler rightmouse(RIGHT_MOUSE_CLOCK, RIGHT_MOUSE_DATA, PS2_MOUSE_STREAM
 Servo leftservo;
 Servo rightservo;
 
+void debug()
+{
+  Serial.println("///////////////////////////");
+  Serial.println();
+  Serial.println(leftdxraw);
+  Serial.println(leftdyraw);
+  Serial.println(rightdxraw);
+  Serial.println(rightdyraw);
+
+  Serial.println();
+  Serial.println(absoluteX);
+  Serial.println(absoluteY);
+  Serial.println(degrees(absoluteTheta));
+}
+
 int sgn(float number)
 {
   if (number == 0)
@@ -41,6 +56,8 @@ bool attachServos()
 
   rightservo.attach(RIGHT_SERVO_PIN);
   rightservo.write(RIGHT_SERVO_NOMINAL);
+
+  return true;
 }
 
 bool storeMouseData()
@@ -167,18 +184,23 @@ float calcPID(float setpoint, float input)
   return PTerm + ITerm + DTerm;
 }
 
-// ACCEPTS INT MAKE FLOAT LATER | actually just make it work later
-bool changeServoSpeeds(float value)
-{
-  leftservo.write(LEFT_SERVO_NOMINAL);
-  rightservo.write(RIGHT_SERVO_NOMINAL);
-}
-
 // possibly? works with negative values | test first
 bool setServoSpeeds(unsigned int leftSpeed, unsigned int rightSpeed)
 {
   leftservo.write(LEFT_SERVO_NOMINAL + leftSpeed + (sgn(leftSpeed) * (LEFT_SERVO_OFFSET)));
   rightservo.write(RIGHT_SERVO_NOMINAL - rightSpeed - (sgn(rightSpeed) * (RIGHT_SERVO_OFFSET)));
+
+  return true;
+}
+
+// ACCEPTS INT MAKE FLOAT LATER | actually just make it work later
+bool changeServoSpeeds(float value)
+{
+  leftservo.write(LEFT_SERVO_NOMINAL);
+  rightservo.write(RIGHT_SERVO_NOMINAL);
+  // calc crap based on other crap
+
+  setServoSpeeds(0, 0);
 
   return true;
 }
@@ -189,15 +211,15 @@ bool driveStraight()
   // tiny delay maybe?
   flushMouseData();
 
-  /* start servos at some arbitrary value, 
+  /* start servos at some arbitrary value,
   and CHANGE that value after succecctions of instructions
   ; optimal speed var or smth? */
-  setServoSpeeds(/* make nominal speed var */);
-  
+  setServoSpeeds(LEFT_SERVO_START, RIGHT_SERVO_START);
+
   lastPoll = 0;
   lastPID = 0;
 
-  /* this is going to need a seperation between 
+  /* this is going to need a seperation between
    absolute coords and aboslute relative coords */
 
   while (absoluteY < 500)
@@ -216,14 +238,13 @@ bool driveStraight()
       calculateDeltas();
       calculatePosition();
 
-      calcPID();
-      changeServoSpeeds();
+      changeServoSpeeds(calcPID(0, 0));
 
       flushMouseData(); // test before and after updating speeds
     }
   }
 
-  setServoSpeeds(LEFT_SERVO_NOMINAL, RIGHT_SERVO_NOMINAL); // stop servos
+  setServoSpeeds(LEFT_SERVO_NOMINAL, RIGHT_SERVO_NOMINAL);
 
   return true;
 }
@@ -233,9 +254,10 @@ void setup()
   attachServos();
 
   Serial.begin(9600);
+
   while (!Serial)
   {
-    ;
+    ; // wait for Serial to initialize
   }
 
   pinMode(BUTTON_PIN, INPUT_PULLUP);
@@ -245,27 +267,4 @@ void setup()
 
 void loop()
 {
-  while (digitalRead(BUTTON_PIN) == HIGH)
-  {
-    ;
-  }
-
-  delay(2000);
-
-  while (digitalRead(BUTTON_PIN) == HIGH)
-  {
-  }
-
-  Serial.println();
-  Serial.println(leftdxraw);
-  Serial.println(leftdyraw);
-  Serial.println(rightdxraw);
-  Serial.println(rightdyraw);
-
-  Serial.println();
-  Serial.println(absoluteX);
-  Serial.println(absoluteY);
-  Serial.println(degrees(absoluteTheta));
-
-  delay(2000);
 }
