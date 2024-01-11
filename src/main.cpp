@@ -167,11 +167,13 @@ float calcPID(float setpoint, float input)
   return PTerm + ITerm + DTerm;
 }
 
-//ACCEPTS INT MAKE FLOAT LATER | actually just make it work later 
-bool changeServoSpeeds(int value)
+// ACCEPTS INT MAKE FLOAT LATER | actually just make it work later
+bool changeServoSpeeds(float value)
 {
-  leftservo.write(LEFT_SERVO_NOMINAL);
-  rightservo.write(RIGHT_SERVO_NOMINAL);
+  // calc crap based on other crap
+  setServoSpeeds();
+
+  return true;
 }
 
 // possibly? works with negative values | test first
@@ -179,6 +181,53 @@ bool setServoSpeeds(unsigned int leftSpeed, unsigned int rightSpeed)
 {
   leftservo.write(LEFT_SERVO_NOMINAL + leftSpeed + (sgn(leftSpeed) * (LEFT_SERVO_OFFSET)));
   rightservo.write(RIGHT_SERVO_NOMINAL - rightSpeed - (sgn(rightSpeed) * (RIGHT_SERVO_OFFSET)));
+
+  return true;
+}
+
+bool driveStraight()
+{
+  setServoSpeeds(0, 0);
+  // tiny delay maybe?
+  flushMouseData();
+
+  /* start servos at some arbitrary value, 
+  and CHANGE that value after succecctions of instructions
+  ; optimal speed var or smth? */
+  setServoSpeeds(/* make nominal speed var */);
+  
+  lastPoll = 0;
+  lastPID = 0;
+
+  /* this is going to need a seperation between 
+   absolute coords and aboslute relative coords */
+
+  while (absoluteY < 500)
+  {
+    if (millis() - lastPoll >= MOUSE_POLL_RATE)
+    {
+      lastPoll = millis();
+      storeMouseData();
+    }
+
+    if (millis() - lastPID >= PID_ITERATION_RATE)
+    {
+      lastPID = millis();
+
+      convertMouseData();
+      calculateDeltas();
+      calculatePosition();
+
+      calcPID();
+      changeServoSpeeds();
+
+      flushMouseData(); // test before and after updating speeds
+    }
+  }
+
+  setServoSpeeds(LEFT_SERVO_NOMINAL, RIGHT_SERVO_NOMINAL); // stop servos
+
+  return true;
 }
 
 void setup()
@@ -204,37 +253,6 @@ void loop()
   }
 
   delay(2000);
-
-  flushMouseData();
-
-  leftservo.write(100);
-  rightservo.write(82);
-
-  prevMillis = 0;
-  startMillis = millis();
-
-  while (true)
-  {
-    if (millis() - startMillis >= 1500)
-    {
-      leftservo.write(87);
-      rightservo.write(89);
-      break;
-    }
-
-    if (millis() - prevMillis >= MOUSE_POLL_RATE)
-    {
-      prevMillis = millis();
-      storeMouseData();
-    }
-  }
-
-  convertMouseData();
-  calculateDeltas();
-  calculatePosition();
-  // runPID();
-  // updateMotorSpeeds();
-  flushMouseData(); // test before and after updating speeds
 
   while (digitalRead(BUTTON_PIN) == HIGH)
   {
