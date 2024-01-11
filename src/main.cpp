@@ -167,11 +167,11 @@ float calcPID(float setpoint, float input)
   return PTerm + ITerm + DTerm;
 }
 
-//ACCEPTS INT MAKE FLOAT LATER | actually just make it work later 
-bool changeServoSpeeds(int value)
+// ACCEPTS INT MAKE FLOAT LATER | actually just make it work later
+bool changeServoSpeeds(float value)
 {
-  leftservo.write(LEFT_SERVO_NOMINAL);
-  rightservo.write(RIGHT_SERVO_NOMINAL);
+  // calc crap based on other crap
+  setServoSpeeds();
 }
 
 // possibly? works with negative values | test first
@@ -179,6 +179,20 @@ bool setServoSpeeds(unsigned int leftSpeed, unsigned int rightSpeed)
 {
   leftservo.write(LEFT_SERVO_NOMINAL + leftSpeed + (sgn(leftSpeed) * (LEFT_SERVO_OFFSET)));
   rightservo.write(RIGHT_SERVO_NOMINAL - rightSpeed - (sgn(rightSpeed) * (RIGHT_SERVO_OFFSET)));
+}
+
+bool driveStraight()
+{
+  setServoSpeeds(0, 0);
+  // tiny delay maybe?
+  flushMouseData();
+  setServoSpeeds(/* make nominal speed var */);
+
+
+  while (absoluteY)
+  {
+
+  }
 }
 
 void setup()
