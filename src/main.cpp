@@ -168,14 +168,14 @@ float calcPID(float setpoint, float input)
 }
 
 //ACCEPTS INT MAKE FLOAT LATER | actually just make it work later 
-bool changeMotorSpeeds(int value)
+bool changeServoSpeeds(int value)
 {
   leftservo.write(LEFT_SERVO_NOMINAL);
   rightservo.write(RIGHT_SERVO_NOMINAL);
 }
 
 // possibly? works with negative values | test first
-bool setMotorSpeeds(unsigned int leftSpeed, unsigned int rightSpeed)
+bool setServoSpeeds(unsigned int leftSpeed, unsigned int rightSpeed)
 {
   leftservo.write(LEFT_SERVO_NOMINAL + leftSpeed + (sgn(leftSpeed) * (LEFT_SERVO_OFFSET)));
   rightservo.write(RIGHT_SERVO_NOMINAL - rightSpeed - (sgn(rightSpeed) * (RIGHT_SERVO_OFFSET)));
