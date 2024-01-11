@@ -172,7 +172,7 @@ bool calculatePosition()
 
 float calcPID(float setpoint, float measured_value)
 {
-  error = setpoint - measured_value;
+  error =  measured_value - setpoint; // error in millimeters
 
   PTerm = P_GAIN * error;
 
@@ -181,7 +181,7 @@ float calcPID(float setpoint, float measured_value)
 
   // DTerm
 
-  return PTerm + ITerm + DTerm;
+  return PTerm + ITerm + DTerm; //returns values relative to millimeter error
 }
 
 // possibly? works with negative values | test first
@@ -193,14 +193,12 @@ bool setServoSpeeds(unsigned int leftSpeed, unsigned int rightSpeed)
   return true;
 }
 
-// ACCEPTS INT MAKE FLOAT LATER | actually just make it work later
-bool changeServoSpeeds(float value)
+// just make it work ok
+bool changeServoSpeeds(float value)// float negative - turn left; positive right
 {
-  leftservo.write(LEFT_SERVO_NOMINAL);
-  rightservo.write(RIGHT_SERVO_NOMINAL);
   // calc crap based on other crap
 
-  setServoSpeeds(0, 0);
+  setServoSpeeds(value, value);
 
   return true;
 }
