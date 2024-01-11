@@ -1,5 +1,19 @@
+// TODO
+// SERVO SPEED FUNCTION
+// STRAIGHT FUNCTION OUTLINE
+// PROPORTIONAL CONTROL
+// DEREVETIVE CONTROL
+// STRAIGHT FUNCTION FULL
+// TURN FUNCTION FULL
+// INITIALIZE FAIL FLASH
+// SPEED
+// REFACTOR DEEZ NUTS
+
 unsigned long prevMillis = 0;
 unsigned long startMillis = 0;
+
+int left_servo_speed = 0;
+int right_servo_speed = 0;
 
 /* Pin assignments */
 const unsigned int LEFT_MOUSE_CLOCK = 8;
@@ -8,7 +22,17 @@ const unsigned int LEFT_MOUSE_DATA = 9;
 const unsigned int RIGHT_MOUSE_CLOCK = 12;
 const unsigned int RIGHT_MOUSE_DATA = 11;
 
+const unsigned int LEFT_SERVO_PIN = 5;
+const unsigned int RIGHT_SERVO_PIN = 6;
+
 const unsigned int BUTTON_PIN = 13;
+
+/* Servo constants */
+const unsigned int LEFT_SERVO_NOMINAL = 90;
+const unsigned int RIGHT_SERVO_NOMINAL = 90;
+
+const unsigned int LEFT_SERVO_OFFSET = 5; //  should be one below the value
+const unsigned int RIGHT_SERVO_OFFSET = 5; // the servo starts spinning at
 
 /* Odometric calculation variables */
 float leftdxraw = 0;
@@ -40,7 +64,7 @@ float absoluteY = 0;
 float absoluteTheta = 0;
 
 /* Odometric calculation constants */
-const int SENSOR_DISTANCE = 106; // Distance between two mouse sensors, in millimeters
+const unsigned int SENSOR_DISTANCE = 106; // Distance between two mouse sensors, in millimeters
 const float MM_PER_COUNT = 0.1; // Number of millimeters corresponding to one count of the optical sensor
 
 /* PID Tuning constants */
@@ -53,13 +77,13 @@ float PTerm = 0;
 float ITerm = 0;
 float DTerm = 0;
 float error = 0;
-float integral = 0;
-float derivative = 0;
+//float integral = 0;
+//float derivative = 0;
 
 /* General program and logic constants | All in milliseconds */
 const unsigned int MOUSE_POLL_RATE = 30; // Delay between sensor data requests
 // const unsigned int ODOMETRY_CALC_RATE = // Frequency at which to run odometry calculations to update locaton data
-const unsigned int PID_ITERATION_RATE = 100; // Frequency of PID and path correction algorithm
+const unsigned int PID_ITERATION_RATE = 1000; // Frequency of PID and path correction algorithm
 const bool DYNAMIC_PID_RATE = false;         // use when error exceeds something only; include min/max rate
 
 /* FUNCTION DECLARATIONS */

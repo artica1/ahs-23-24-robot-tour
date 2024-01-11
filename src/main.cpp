@@ -17,6 +17,32 @@ int sgn(float number)
     return number / abs(number);
 }
 
+bool initializeMice()
+{
+  if (leftmouse.initialise() != 0)
+  {
+    Serial.println("mouse error");
+  };
+
+  delay(100);
+
+  if (rightmouse.initialise() != 0)
+  {
+    Serial.println("mouse error");
+  };
+
+  return true;
+}
+
+bool attachServos()
+{
+  leftservo.attach(LEFT_SERVO_PIN);
+  leftservo.write(LEFT_SERVO_NOMINAL);
+
+  rightservo.attach(RIGHT_SERVO_PIN);
+  rightservo.write(RIGHT_SERVO_NOMINAL);
+}
+
 bool storeMouseData()
 {
   leftmouse.get_data();
@@ -127,57 +153,54 @@ bool calculatePosition()
   return true;
 }
 
-/*
-float runPID(float setpoint, float input) {
+float calcPID(float setpoint, float input)
+{
   error = setpoint - input;
 
   PTerm = P_GAIN * error;
 
-  integral = (integral + error * PID_ITERATION_RATE);
-  ITerm = I_GAIN * integral;
+  // integral = (integral + error * PID_ITERATION_RATE);
+  // ITerm = I_GAIN * integral;
 
-  //DTerm
+  // DTerm
 
   return PTerm + ITerm + DTerm;
 }
 
-bool changeMotorSpeeds(float value) {
-  leftservo.write(95 + value);
-  rightservo.write(86 + value);
+//ACCEPTS INT MAKE FLOAT LATER | actually just make it work later 
+bool changeMotorSpeeds(int value)
+{
+  leftservo.write(LEFT_SERVO_NOMINAL);
+  rightservo.write(RIGHT_SERVO_NOMINAL);
 }
-*/
+
+// possibly? works with negative values | test first
+bool setMotorSpeeds(unsigned int leftSpeed, unsigned int rightSpeed)
+{
+  leftservo.write(LEFT_SERVO_NOMINAL + leftSpeed + (sgn(leftSpeed) * (LEFT_SERVO_OFFSET)));
+  rightservo.write(RIGHT_SERVO_NOMINAL - rightSpeed - (sgn(rightSpeed) * (RIGHT_SERVO_OFFSET)));
+}
 
 void setup()
 {
+  attachServos();
+
   Serial.begin(9600);
-
-  if (leftmouse.initialise() != 0)
+  while (!Serial)
   {
-    // mouse error
-    Serial.println("mouse error");
-  };
-
-  delay(100);
-
-  if (rightmouse.initialise() != 0)
-  {
-    // mouse error
-    Serial.println("mouse error");
-  };
+    ;
+  }
 
   pinMode(BUTTON_PIN, INPUT_PULLUP);
 
-  leftservo.attach(5);
-  leftservo.write(87);
-
-  rightservo.attach(6);
-  rightservo.write(89);
+  initializeMice();
 }
 
 void loop()
 {
   while (digitalRead(BUTTON_PIN) == HIGH)
   {
+    ;
   }
 
   delay(2000);
