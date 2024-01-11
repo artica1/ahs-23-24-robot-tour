@@ -170,9 +170,9 @@ bool calculatePosition()
   return true;
 }
 
-float calcPID(float setpoint, float input)
+float calcPID(float setpoint, float measured_value)
 {
-  error = setpoint - input;
+  error = setpoint - measured_value;
 
   PTerm = P_GAIN * error;
 
