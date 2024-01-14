@@ -1,7 +1,5 @@
 // TODO
-// SERVO SPEED CHANGE LOGIC
 // DEREVETIVE CONTROL
-// STRAIGHT FUNCTION FULL
 // TURN FUNCTION FULL
 // SPEED
 // REFACTOR
@@ -41,7 +39,7 @@ const unsigned int SENSOR_DISTANCE = 106; // Distance between two mouse sensors,
 const float MM_PER_COUNT = 0.1; // Number of millimeters corresponding to one count of the optical sensor
 
 /* Servo variables */
-int left_servo_speed = 0;
+int left_servo_speed = 0; // current RELATIVE speed of servos
 int right_servo_speed = 0;
 
 // optimal servo stuff

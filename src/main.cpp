@@ -172,21 +172,24 @@ bool calculatePosition()
 
 float calcPID(float setpoint, float measured_value)
 {
-  error =  measured_value - setpoint; // error in millimeters
+  error = setpoint - measured_value; // error in millimeters
 
   PTerm = P_GAIN * error;
 
   // integral = (integral + error * PID_ITERATION_RATE);
   // ITerm = I_GAIN * integral;
 
-  // DTerm
+  //DTerm = D_GAIN;
 
-  return PTerm + ITerm + DTerm; //returns values relative to millimeter error
+  return PTerm + ITerm + DTerm; // returns values relative to millimeter error
 }
 
 // possibly? works with negative values | test first
 bool setServoSpeeds(unsigned int leftSpeed, unsigned int rightSpeed)
 {
+  left_servo_speed = leftSpeed;
+  right_servo_speed = rightSpeed;
+
   leftservo.write(LEFT_SERVO_NOMINAL + leftSpeed + (sgn(leftSpeed) * (LEFT_SERVO_OFFSET)));
   rightservo.write(RIGHT_SERVO_NOMINAL - rightSpeed - (sgn(rightSpeed) * (RIGHT_SERVO_OFFSET)));
 
@@ -194,11 +197,15 @@ bool setServoSpeeds(unsigned int leftSpeed, unsigned int rightSpeed)
 }
 
 // just make it work ok
-bool changeServoSpeeds(float value)// float negative - turn left; positive right
+bool changeServoSpeeds(float value)
 {
-  // calc crap based on other crap
+  // going to give us how many millimeters we need to correct by.
 
-  setServoSpeeds(value, value);
+  value /= 10; // convert the correction factor to centimeters
+
+  // for every centimter, modify servo speeds by one
+  // float negative - turn left; positive right
+  setServoSpeeds(left_servo_speed - round(value), right_servo_speed + round(value));
 
   return true;
 }
@@ -206,21 +213,25 @@ bool changeServoSpeeds(float value)// float negative - turn left; positive right
 bool driveStraight()
 {
   setServoSpeeds(0, 0);
-  // tiny delay maybe?
+
+  delay(100);
+
   flushMouseData();
+
+  delay(100);
 
   /* start servos at some arbitrary value,
   and CHANGE that value after succecctions of instructions
   ; optimal speed var or smth? */
   setServoSpeeds(LEFT_SERVO_START, RIGHT_SERVO_START);
 
-  lastPoll = 0;
-  lastPID = 0;
-
   /* this is going to need a seperation between
    absolute coords and aboslute relative coords */
 
-  while (absoluteY < 500)
+  lastPoll = 0;
+  lastPID = 0;
+
+  do
   {
     if (millis() - lastPoll >= MOUSE_POLL_RATE)
     {
@@ -236,11 +247,11 @@ bool driveStraight()
       calculateDeltas();
       calculatePosition();
 
-      changeServoSpeeds(calcPID(0, 0));
+      changeServoSpeeds(calcPID(0, absoluteX));
 
       flushMouseData(); // test before and after updating speeds
     }
-  }
+  } while (absoluteY < 500);
 
   setServoSpeeds(LEFT_SERVO_NOMINAL, RIGHT_SERVO_NOMINAL);
 
