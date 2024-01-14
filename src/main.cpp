@@ -210,7 +210,7 @@ bool changeServoSpeeds(float value)
   return true;
 }
 
-bool driveStraight()
+bool driveStraight(int distance)
 {
   setServoSpeeds(0, 0);
 
@@ -247,11 +247,11 @@ bool driveStraight()
       calculateDeltas();
       calculatePosition();
 
-      changeServoSpeeds(calcPID(0, absoluteX, absoluteTheta));
+      changeServoSpeeds(calcPID(0, absoluteX, tan(absoluteTheta)));
 
       flushMouseData(); // test before and after updating speeds
     }
-  } while (absoluteY < 500);
+  } while (absoluteY < distance);
 
   setServoSpeeds(LEFT_SERVO_NOMINAL, RIGHT_SERVO_NOMINAL);
 
@@ -272,6 +272,10 @@ void setup()
   pinMode(BUTTON_PIN, INPUT_PULLUP);
 
   initializeMice();
+
+  delay(1000);
+
+  driveStraight(500);
 }
 
 void loop()
