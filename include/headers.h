@@ -83,8 +83,6 @@ float PTerm = 0;
 float ITerm = 0;
 float DTerm = 0;
 float error = 0;
-//float integral = 0;
-//float derivative = 0;
 
 /* General program and logic constants | All in milliseconds */
 const unsigned int MOUSE_POLL_RATE = 30; // Delay between sensor data requests

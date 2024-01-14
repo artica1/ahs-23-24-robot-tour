@@ -170,7 +170,7 @@ bool calculatePosition()
   return true;
 }
 
-float calcPID(float setpoint, float measured_value)
+float calcPID(float setpoint, float measured_value, float derivative)
 {
   error = setpoint - measured_value; // error in millimeters
 
@@ -179,7 +179,7 @@ float calcPID(float setpoint, float measured_value)
   // integral = (integral + error * PID_ITERATION_RATE);
   // ITerm = I_GAIN * integral;
 
-  //DTerm = D_GAIN;
+  DTerm = D_GAIN * derivative;
 
   return PTerm + ITerm + DTerm; // returns values relative to millimeter error
 }
@@ -247,7 +247,7 @@ bool driveStraight()
       calculateDeltas();
       calculatePosition();
 
-      changeServoSpeeds(calcPID(0, absoluteX));
+      changeServoSpeeds(calcPID(0, absoluteX, absoluteTheta));
 
       flushMouseData(); // test before and after updating speeds
     }
