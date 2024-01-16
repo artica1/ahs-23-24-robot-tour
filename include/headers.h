@@ -86,5 +86,5 @@ float error = 0;
 /* General program and logic constants | All in milliseconds */
 const unsigned int MOUSE_POLL_RATE = 30; // Delay between sensor data requests
 const unsigned int ODOMETRY_CALC_RATE = -1; // Frequency at which to run odometry calculations to update locaton data
-const unsigned int PID_ITERATION_RATE = 1000; // Frequency of PID and path correction algorithm
+const unsigned int PID_ITERATION_RATE = 100; // Frequency of PID and path correction algorithm
 const bool DYNAMIC_PID_RATE = false;         // use when error exceeds something only; include min/max rate
