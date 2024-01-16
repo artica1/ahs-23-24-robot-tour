@@ -273,6 +273,8 @@ void setup()
 
   initializeMice();
 
+  while (digitalRead(BUTTON_PIN) == HIGH);
+
   delay(1000);
 
   driveStraight(500);

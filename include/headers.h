@@ -24,15 +24,14 @@ const unsigned int RIGHT_SERVO_PIN = 6;
 const unsigned int BUTTON_PIN = 13;
 
 /* Servo constants */
-const unsigned int LEFT_SERVO_NOMINAL = 90;
-const unsigned int RIGHT_SERVO_NOMINAL = 90;
+const unsigned int LEFT_SERVO_NOMINAL = 89;
+const unsigned int RIGHT_SERVO_NOMINAL = 88;
 
-// should be one below the value the servo starts spinning at
-const unsigned int LEFT_SERVO_OFFSET = 5; 
-const unsigned int RIGHT_SERVO_OFFSET = 5;
+const unsigned int LEFT_SERVO_OFFSET = 4; 
+const unsigned int RIGHT_SERVO_OFFSET = 4;
 
-const unsigned int LEFT_SERVO_START = 5;
-const unsigned int RIGHT_SERVO_START = 5;
+const unsigned int LEFT_SERVO_START = 1;
+const unsigned int RIGHT_SERVO_START = 1;
 
 /* Odometric calculation constants */
 const unsigned int SENSOR_DISTANCE = 106; // Distance between two mouse sensors, in millimeters
