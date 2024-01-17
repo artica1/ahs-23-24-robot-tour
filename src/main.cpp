@@ -172,14 +172,14 @@ bool calculatePosition()
 
 float calcPID(float setpoint, float measured_value, float derivative)
 {
-  error = setpoint - measured_value; // error in millimeters
+  error = (setpoint - measured_value) * -1; // error in millimeters
 
   PTerm = P_GAIN * error;
 
-  // integral = (integral + error * PID_ITERATION_RATE);
-  // ITerm = I_GAIN * integral;
+  integral = integral + (error * PID_ITERATION_RATE);
+  ITerm = I_GAIN * integral;
 
-  DTerm = D_GAIN * derivative;
+  DTerm = D_GAIN * tan(derivative);
 
   return PTerm + ITerm + DTerm; // returns values relative to millimeter error
 }
@@ -202,10 +202,11 @@ bool changeServoSpeeds(float value)
   // going to give us how many millimeters we need to correct by.
 
   value /= 10; // convert the correction factor to centimeters
+  value = constrain(value, -5, 5); // prevent overwind
 
   // for every centimter, modify servo speeds by one
   // float negative - turn left; positive right
-  setServoSpeeds(left_servo_speed - round(value), right_servo_speed + round(value));
+  setServoSpeeds(LEFT_SERVO_START - round(value), RIGHT_SERVO_START + round(value));
 
   return true;
 }
@@ -237,6 +238,10 @@ bool driveStraight(int distance)
     {
       lastPoll = millis();
       storeMouseData();
+      if (digitalRead(BUTTON_PIN) == LOW) {
+        setServoSpeeds(0, 0);
+        return false;
+      }
     }
 
     if (millis() - lastPID >= PID_ITERATION_RATE)
@@ -253,7 +258,7 @@ bool driveStraight(int distance)
     }
   } while (absoluteY < distance);
 
-  setServoSpeeds(LEFT_SERVO_NOMINAL, RIGHT_SERVO_NOMINAL);
+  setServoSpeeds(0, 0);
 
   return true;
 }
@@ -272,14 +277,15 @@ void setup()
   pinMode(BUTTON_PIN, INPUT_PULLUP);
 
   initializeMice();
+}
 
+void loop()
+{
   while (digitalRead(BUTTON_PIN) == HIGH);
 
   delay(1000);
 
   driveStraight(500);
-}
 
-void loop()
-{
+  delay(1000);
 }
