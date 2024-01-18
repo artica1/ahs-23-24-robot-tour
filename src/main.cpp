@@ -13,15 +13,23 @@ void debug()
 {
   Serial.println("///////////////////////////");
   Serial.println();
-  Serial.println(leftdxraw);
-  Serial.println(leftdyraw);
-  Serial.println(rightdxraw);
-  Serial.println(rightdyraw);
+  Serial.print("LEFT_DX "); Serial.println(leftdxraw);
+  Serial.print("LEFT_DY "); Serial.println(leftdyraw);
+  Serial.print("RIGHT_DX "); Serial.println(rightdxraw);
+  Serial.print("RIGHT_DY "); Serial.println(rightdyraw);
 
   Serial.println();
-  Serial.println(absoluteX);
-  Serial.println(absoluteY);
-  Serial.println(degrees(absoluteTheta));
+  Serial.print("X   "); Serial.println(absoluteX);
+  Serial.print("Y   "); Serial.println(absoluteY);
+  Serial.print("ROT "); Serial.println(degrees(absoluteTheta));
+
+  Serial.println();
+  Serial.print("ERROR "); Serial.println(error);
+  Serial.print("PTERM   "); Serial.println(PTerm);
+  Serial.print("INTGRL "); Serial.println(integral);
+  Serial.print("ITERM "); Serial.println(ITerm);
+  Serial.print("DTERM "); Serial.println(DTerm);
+  Serial.print("PID "); Serial.println(PTerm+ITerm+DTerm);
 }
 
 int sgn(float number)
@@ -170,7 +178,7 @@ bool calculatePosition()
   return true;
 }
 
-float calcPID(float setpoint, float measured_value, float derivative)
+float calcPID(float setpoint, float measured_value, float rotation)
 {
   error = (setpoint - measured_value) * -1; // error in millimeters
 
@@ -179,7 +187,7 @@ float calcPID(float setpoint, float measured_value, float derivative)
   integral = integral + (error * PID_ITERATION_RATE);
   ITerm = I_GAIN * integral;
 
-  DTerm = D_GAIN * tan(derivative);
+  DTerm = D_GAIN * tan(rotation);
 
   return PTerm + ITerm + DTerm; // returns values relative to millimeter error
 }
@@ -252,7 +260,9 @@ bool driveStraight(int distance)
       calculateDeltas();
       calculatePosition();
 
-      changeServoSpeeds(calcPID(0, absoluteX, tan(absoluteTheta)));
+      changeServoSpeeds(calcPID(0, absoluteX, absoluteTheta));
+
+      debug();
 
       flushMouseData(); // test before and after updating speeds
     }
@@ -285,7 +295,7 @@ void loop()
 
   delay(1000);
 
-  driveStraight(500);
+  driveStraight(200);
 
   delay(1000);
 }

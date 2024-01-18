@@ -75,7 +75,7 @@ float absoluteTheta = 0;
 /* PID Tuning constants */
 const float P_GAIN = 1;
 const float I_GAIN = 0.01;
-const float D_GAIN = -2;
+const float D_GAIN = -1;
 
 /* PID calulation variables */
 float PTerm = 0;
