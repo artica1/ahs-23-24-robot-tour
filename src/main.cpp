@@ -142,7 +142,7 @@ float calcYMovement(float radius, float alpha, float dT)
   return radius * sgn(dT) * (cos(alpha) - cos(alpha + dT));
 }
 
-bool calculateDeltas()
+bool calculateDeltas() // try and optimize this in the future, takes up significant processing time
 {
   alphaL = calcAlpha(dxmm, leftdymm);
   alphaR = calcAlpha(dxmm, rightdymm);
