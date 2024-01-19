@@ -12,11 +12,13 @@ Servo rightservo;
 void debug()
 {
   Serial.println("///////////////////////////");
+  /*
   Serial.println();
   Serial.print("LEFT_DX "); Serial.println(leftdxraw);
   Serial.print("LEFT_DY "); Serial.println(leftdyraw);
   Serial.print("RIGHT_DX "); Serial.println(rightdxraw);
   Serial.print("RIGHT_DY "); Serial.println(rightdyraw);
+  */
 
   Serial.println();
   Serial.print("X   "); Serial.println(absoluteX);
@@ -25,11 +27,19 @@ void debug()
 
   Serial.println();
   Serial.print("ERROR "); Serial.println(error);
-  Serial.print("PTERM   "); Serial.println(PTerm);
+  Serial.print("PTERM  "); Serial.println(PTerm);
   Serial.print("INTGRL "); Serial.println(integral);
   Serial.print("ITERM "); Serial.println(ITerm);
   Serial.print("DTERM "); Serial.println(DTerm);
   Serial.print("PID "); Serial.println(PTerm+ITerm+DTerm);
+
+  /*
+  Serial.println();
+  Serial.print(" "); Serial.println(leftdxraw);
+  Serial.print(" "); Serial.println(leftdyraw);
+  Serial.print(" "); Serial.println(rightdxraw);
+  Serial.print(" "); Serial.println(rightdyraw);
+  */
 }
 
 int sgn(float number)
@@ -210,7 +220,7 @@ bool changeServoSpeeds(float value)
   // going to give us how many millimeters we need to correct by.
 
   value /= 10; // convert the correction factor to centimeters
-  value = constrain(value, -5, 5); // prevent overwind
+  //value = constrain(value, -5, 5); // prevent overwind
 
   // for every centimter, modify servo speeds by one
   // float negative - turn left; positive right
@@ -268,6 +278,8 @@ bool driveStraight(int distance)
     }
   } while (absoluteY < distance);
 
+  //debug();
+
   setServoSpeeds(0, 0);
 
   return true;
@@ -277,12 +289,16 @@ void setup()
 {
   attachServos();
 
-  Serial.begin(9600);
+  Serial.begin(250000);
 
   while (!Serial)
   {
     ; // wait for Serial to initialize
   }
+
+  calculateDeltas();
+  calculatePosition();
+  debug();
 
   pinMode(BUTTON_PIN, INPUT_PULLUP);
 
@@ -295,7 +311,7 @@ void loop()
 
   delay(1000);
 
-  driveStraight(200);
+  //driveStraight(500);
 
   delay(1000);
 }
