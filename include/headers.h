@@ -30,12 +30,12 @@ const unsigned int RIGHT_SERVO_NOMINAL = 88;
 const unsigned int LEFT_SERVO_OFFSET = 4; 
 const unsigned int RIGHT_SERVO_OFFSET = 5;
 
-const unsigned int LEFT_SERVO_START = 1;
-const unsigned int RIGHT_SERVO_START = 1;
+const unsigned int LEFT_SERVO_START = 4;
+const unsigned int RIGHT_SERVO_START = 4;
 
 /* Odometric calculation constants */
 const unsigned int SENSOR_DISTANCE = 106; // Distance between two mouse sensors, in millimeters
-const float MM_PER_COUNT = 0.095; // Number of millimeters corresponding to one count of the optical sensor
+const float MM_PER_COUNT = 0.1; // Number of millimeters corresponding to one count of the optical sensor
 
 /* Servo variables */
 int left_servo_speed = 0; // current RELATIVE speed of servos
@@ -50,7 +50,7 @@ float rightdxraw = 0;
 float rightdyraw = 0;
 
 float dxmm = 0;
-float leftdymm = 0;
+float leftdymm = 83.2522;
 float rightdymm = 0;
 
 float alphaL = 0;
@@ -74,8 +74,8 @@ float absoluteTheta = 0;
 
 /* PID Tuning constants */
 const float P_GAIN = 1;
-const float I_GAIN = 0.01;
-const float D_GAIN = -1;
+const float I_GAIN = 0;
+const float D_GAIN = -2;
 
 /* PID calulation variables */
 float PTerm = 0;
