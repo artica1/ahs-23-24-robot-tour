@@ -1,5 +1,5 @@
-#ifndef EXTRA_H
-#define EXTRA_H
+#ifndef UTILS_H
+#define UTILS_H
 
 int sgn(float number);
 

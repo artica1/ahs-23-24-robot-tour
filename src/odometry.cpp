@@ -2,7 +2,7 @@
 #include "settings.h"
 #include "odometry.h"
 #include "mouse.h"
-#include "extra.h"
+#include "utils.h"
 
 /* Odometric calculation variables */
 float dxmm = 0;
