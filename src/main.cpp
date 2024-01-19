@@ -7,7 +7,7 @@ void setup()
 {
   attachServos();
 
-  Serial.begin(9600);
+  Serial.begin(250000);
 
   while (!Serial)
   {
