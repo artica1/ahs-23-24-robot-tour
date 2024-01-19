@@ -2,6 +2,8 @@
 #include "settings.h"
 #include "drive.h"
 #include "mouse.h"
+#include "odometry.h"
+#include "utils.h"
 
 void setup()
 {
@@ -11,8 +13,15 @@ void setup()
 
   while (!Serial)
   {
-    ; // wait for Serial to initialize
+    ; // Wait for Serial to initialize
   }
+
+  /*
+  calculateDeltas();
+  calculatePosition();
+
+  debug();
+  */
 
   pinMode(BUTTON_PIN, INPUT_PULLUP);
 
@@ -21,11 +30,14 @@ void setup()
 
 void loop()
 {
-  while (digitalRead(BUTTON_PIN) == HIGH);
+  while (digitalRead(BUTTON_PIN) == HIGH)
+  {
+    ; // Wait for button to be pressed
+  }
 
   delay(1000);
 
-  driveStraight(200);
+  driveStraight(500);
 
   delay(1000);
 }

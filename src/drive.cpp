@@ -86,7 +86,9 @@ bool driveStraight(int distance)
     if (millis() - lastPoll >= MOUSE_POLL_RATE)
     {
       lastPoll = millis();
+
       storeMouseData();
+
       if (digitalRead(BUTTON_PIN) == LOW)
       {
         setServoSpeeds(0, 0);
@@ -105,6 +107,8 @@ bool driveStraight(int distance)
       changeServoSpeeds(calcPID(0, absoluteX, absoluteTheta));
 
       debug();
+
+      break;
 
       flushMouseData(); // test before and after updating speeds
     }

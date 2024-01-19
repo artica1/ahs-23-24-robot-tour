@@ -30,7 +30,7 @@ float absoluteTheta = 0;
 
 bool convertMouseData()
 {
-  dxmm = (leftdxraw + rightdxraw) / 2 * MM_PER_COUNT;
+  dxmm = maxMag(leftdxraw, rightdxraw) * MM_PER_COUNT;
   leftdymm = leftdyraw * MM_PER_COUNT * -1;
   rightdymm = rightdyraw * MM_PER_COUNT * -1;
 
@@ -44,14 +44,10 @@ float calcAlpha(float x, float y)
 
 float calcArcLength(float x, float y, float alpha)
 {
-  if (alpha == 0 || alpha == 3.1415927410125732)
-  {
+  if (alpha == 0 || alpha == PI)
     return abs(x);
-  }
   else
-  {
     return y / sin(alpha);
-  }
 }
 
 float calcRotation(float dyL, float dyR, float aL, float aR, float lL, float lR, int D)
@@ -66,9 +62,9 @@ float calcRadius(float arclength, float dT)
   return arclength / abs(dT);
 }
 
-float calcXMovement(float radius, float alpha, float dT)
+float calcXMovement(float radius, float alpha, float dT, float offset)
 {
-  return radius * sgn(dT) * (sin(alpha + dT) - sin(alpha));
+  return radius * sgn(dT) * (sin(alpha + dT) - sin(alpha)) + offset;
 }
 
 float calcYMovement(float radius, float alpha, float dT)
@@ -96,7 +92,7 @@ bool calculateDeltas() // try and optimize this in the future, takes up signific
     radiusL = calcRadius(arclengthL, dTheta);
     radiusR = calcRadius(arclengthR, dTheta);
 
-    dx = (calcXMovement(radiusL, alphaL, dTheta) + calcXMovement(radiusR, alphaR, dTheta)) / 2;
+    dx = (calcXMovement(radiusL, alphaL, dTheta, -SENSOR_DISTANCE/2) + calcXMovement(radiusR, alphaR, dTheta, SENSOR_DISTANCE/2)) / 2;
     dy = (calcYMovement(radiusL, alphaL, dTheta) + calcYMovement(radiusR, alphaR, dTheta)) / 2;
   }
 

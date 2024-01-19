@@ -42,6 +42,14 @@ void debug()
   Serial.println(rightdyraw);
 
   Serial.println();
+  Serial.print("DX_MM ");
+  Serial.println(dxmm);
+  Serial.print("LEFT_DY_MM ");
+  Serial.println(leftdymm);
+  Serial.print("RIGHT_DY_MM ");
+  Serial.println(rightdymm);
+
+  Serial.println();
   Serial.print("X   ");
   Serial.println(absoluteX);
   Serial.print("Y   ");
@@ -50,15 +58,15 @@ void debug()
   Serial.println(degrees(absoluteTheta));
 
   Serial.println();
-  Serial.print("ERROR ");
+  Serial.print("ERROR  ");
   Serial.println(error);
-  Serial.print("PTERM   ");
+  Serial.print("PTERM  ");
   Serial.println(PTerm);
   Serial.print("INTGRL ");
   Serial.println(integral);
-  Serial.print("ITERM ");
+  Serial.print("ITERM  ");
   Serial.println(ITerm);
-  Serial.print("DTERM ");
+  Serial.print("DTERM  ");
   Serial.println(DTerm);
   Serial.print("PID ");
   Serial.println(PTerm + ITerm + DTerm);

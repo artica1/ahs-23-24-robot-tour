@@ -10,7 +10,7 @@ float integral = 0;
 
 float calcPID(float setpoint, float measured_value, float rotation)
 {
-  error = (setpoint - measured_value) * -1; // error in millimeters
+  error = measured_value - setpoint; // error in millimeters
 
   PTerm = P_GAIN * error;
 

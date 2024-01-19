@@ -3,6 +3,8 @@
 
 int sgn(float number);
 
+int maxMag(int a, int b);
+
 void debug();
 
 #endif
