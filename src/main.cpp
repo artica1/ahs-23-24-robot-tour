@@ -30,6 +30,8 @@ void setup()
 
 void loop()
 {
+  Serial.println("Ready");
+
   while (digitalRead(BUTTON_PIN) == HIGH)
   {
     ; // Wait for button to be pressed
@@ -37,7 +39,11 @@ void loop()
 
   delay(1000);
 
-  driveStraight(500);
+  absoluteX = 0;
+  absoluteY = 0;
+  absoluteTheta = 0;
+
+  driveStraight(250);
 
   delay(1000);
 }

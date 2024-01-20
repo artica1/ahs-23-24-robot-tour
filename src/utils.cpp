@@ -57,6 +57,7 @@ void debug()
   Serial.print("ROT ");
   Serial.println(degrees(absoluteTheta));
 
+/*
   Serial.println();
   Serial.print("ERROR  ");
   Serial.println(error);
@@ -70,4 +71,5 @@ void debug()
   Serial.println(DTerm);
   Serial.print("PID ");
   Serial.println(PTerm + ITerm + DTerm);
+  */
 }

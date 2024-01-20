@@ -78,8 +78,8 @@ bool driveStraight(int distance)
   /* this is going to need a seperation between
    absolute coords and aboslute relative coords */
 
-  lastPoll = 0;
-  lastPID = 0;
+  lastPoll = millis();
+  lastPID = millis();
 
   do
   {
@@ -98,21 +98,20 @@ bool driveStraight(int distance)
 
     if (millis() - lastPID >= PID_ITERATION_RATE)
     {
+
       lastPID = millis();
 
       convertMouseData();
       calculateDeltas();
       calculatePosition();
 
-      changeServoSpeeds(calcPID(0, absoluteX, absoluteTheta));
+      //changeServoSpeeds(calcPID(0, absoluteX, absoluteTheta));
 
       debug();
 
-      break;
-
       flushMouseData(); // test before and after updating speeds
     }
-  } while (absoluteY < distance);
+  } while (absoluteTheta > -PI/2);
 
   setServoSpeeds(0, 0);
 
