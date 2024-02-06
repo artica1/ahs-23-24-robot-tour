@@ -28,6 +28,10 @@ float absoluteX = 0;
 float absoluteY = 0;
 float absoluteTheta = 0;
 
+float localX = 0;
+float localY = 0;
+float localTheta = 0;
+
 bool convertMouseData()
 {
   dxmm = maxMag(leftdxraw, rightdxraw) * MM_PER_COUNT;
@@ -101,9 +105,22 @@ bool calculateDeltas() // try and optimize this in the future, takes up signific
 
 bool calculatePosition()
 {
+  localX += dx;
+  localY += dy;
+  localTheta += dTheta;
+
   absoluteX = absoluteX + sqrt(pow(dx, 2) + pow(dy, 2)) * cos(absoluteTheta + atan2(dy, dx));
   absoluteY = absoluteY + sqrt(pow(dx, 2) + pow(dy, 2)) * sin(absoluteTheta + atan2(dy, dx));
   absoluteTheta = absoluteTheta + dTheta;
+
+  return true;
+}
+
+bool resetLocalPos() 
+{
+  localX = 0;
+  localY = 0;
+  localTheta = 0;
 
   return true;
 }

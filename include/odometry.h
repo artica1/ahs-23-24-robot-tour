@@ -20,6 +20,11 @@ extern float dx;
 extern float dy;
 extern float dTheta;
 
+// yeah current process
+extern float localX;
+extern float localY;
+extern float localTheta; // Radians
+
 bool convertMouseData();
 
 float calcAlpha(float x, float y);
@@ -30,12 +35,14 @@ float calcRotation(float dyL, float dyR, float aL, float aR, float lL, float lR,
 
 float calcRadius(float arclength, float dT);
 
-float calcXMovement(float radius, float alpha, float dT);
+float calcXMovement(float radius, float alpha, float dT, float offset);
 
 float calcYMovement(float radius, float alpha, float dT);
 
 bool calculateDeltas();
 
 bool calculatePosition();
+
+bool resetLocalPos();
 
 #endif

@@ -62,7 +62,7 @@ bool storeMouseData()
 }
 
 /*
- * Pulls data from both mice to wipe the memory
+ * Pulls data from both mice to wipe the memory,
  * and resets all mouse raw variables to 0
  *
  * Run before movement begins to erase any sensor data from external movement

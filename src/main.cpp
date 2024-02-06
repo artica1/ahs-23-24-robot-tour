@@ -43,7 +43,7 @@ void loop()
   absoluteY = 0;
   absoluteTheta = 0;
 
-  driveStraight(250);
+  turn(-PI/2);
 
   delay(1000);
 }
