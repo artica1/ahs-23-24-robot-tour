@@ -1,9 +1,6 @@
 // TODO
-// DEREVETIVE CONTROL
-// TURN FUNCTION FULL
-// SPEED
-// optimal servo stuff
-// make absolute be the rod
+// wipe odometry functions of unneeded stuff
+// does this need dx dy at all?
 
 #ifndef SETTINGS_H
 #define SETTINGS_H
@@ -27,29 +24,15 @@ const unsigned int RIGHT_SERVO_NOMINAL = 88;
 const unsigned int LEFT_SERVO_OFFSET = 4;
 const unsigned int RIGHT_SERVO_OFFSET = 5;
 
-const unsigned int LEFT_SERVO_START = 0;
-const unsigned int RIGHT_SERVO_START = 1;
-
-const unsigned int TURN_SPEED = 2;
+const unsigned int LEFT_SERVO_SPEED = 1;
+const unsigned int RIGHT_SERVO_SPEED = 1;
 
 /* Odometric calculation constants */
 const int SENSOR_DISTANCE = 106; // Distance between two mouse sensors, in millimeters
 const float MM_PER_COUNT = 0.08;         // Number of millimeters corresponding to one count of the optical sensor
 
-/* Robot Position and Rotation Variables */
-extern float absoluteX;
-extern float absoluteY;
-extern float absoluteTheta; // Radians
-
-/* PID Tuning constants */
-const float P_GAIN = 1;
-const float I_GAIN = 0;
-const float D_GAIN = 0;
-
 /* General program and logic constants | All in milliseconds */
 const unsigned int MOUSE_POLL_RATE = 20;     // Delay between sensor data requests
-const unsigned int ODOMETRY_CALC_RATE = 0;  // Frequency at which to run odometry calculations to update locaton data
-const unsigned int PID_ITERATION_RATE = 1000; // Frequency of PID and path correction algorithm
-const bool DYNAMIC_PID_RATE = false;         // use when error exceeds something only; include min/max rate
+const unsigned int ODOMETRY_CALC_RATE = 100;  // Frequency at which to run odometry calculations to update locaton data
 
 #endif

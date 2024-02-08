@@ -2,8 +2,8 @@
 #include "settings.h"
 #include "drive.h"
 #include "mouse.h"
-#include "odometry.h"
-#include "utils.h"
+//#include "odometry.h"
+//#include "utils.h"
 
 void setup()
 {
@@ -15,13 +15,6 @@ void setup()
   {
     ; // Wait for Serial to initialize
   }
-
-  /*
-  calculateDeltas();
-  calculatePosition();
-
-  debug();
-  */
 
   pinMode(BUTTON_PIN, INPUT_PULLUP);
 
@@ -39,12 +32,7 @@ void loop()
 
   delay(1000);
 
-  absoluteX = 0;
-  absoluteY = 0;
-  absoluteTheta = 0;
-
-  //turn(-PI/2);
-  driveStraight(500);
+  turn(-PI/2);
 
   delay(1000);
 }

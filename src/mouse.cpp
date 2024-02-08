@@ -15,17 +15,23 @@ float rightdyraw = 0;
  * stability and epic startup effect
  *
  * Enable serial before calling this function
- * 
+ *
  * Returns false if at least one mouse fails to initialize
  */
 bool initializeMice()
 {
-  bool initializeFail = false;
-
   if (leftmouse.initialise() != 0)
   {
     Serial.println("left mouse error");
-    initializeFail = true;
+    
+    delay(100);
+
+    if (rightmouse.initialise() != 0)
+    {
+      Serial.println("right mouse error");
+      return false;
+    };
+    return false;
   };
 
   delay(100);
@@ -33,13 +39,10 @@ bool initializeMice()
   if (rightmouse.initialise() != 0)
   {
     Serial.println("right mouse error");
-    initializeFail = true;
-  };
-  
-  if (initializeFail == true)
     return false;
-  else
-    return true;
+  };
+
+  return true;
 }
 
 /*

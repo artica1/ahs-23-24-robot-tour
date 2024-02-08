@@ -1,8 +1,7 @@
 #include <Arduino.h>
-#include "settings.h"
+//#include "settings.h"
 #include "mouse.h"
 #include "odometry.h"
-#include "pid.h"
 #include "utils.h"
 
 /*
@@ -51,11 +50,11 @@ void debug()
 
   Serial.println();
   Serial.print("X   ");
-  Serial.println(absoluteX);
+  Serial.println(localX);
   Serial.print("Y   ");
-  Serial.println(absoluteY);
+  Serial.println(localY);
   Serial.print("ROT ");
-  Serial.println(degrees(absoluteTheta));
+  Serial.println(degrees(localTheta));
 
 /*
   Serial.println();

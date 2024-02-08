@@ -18,9 +18,9 @@ extern float gamma;
 
 extern float dx;
 extern float dy;
-extern float dTheta;
+extern float dTheta; // Radians
 
-// yeah current process
+/* Robot Position and Rotation Variables */
 extern float localX;
 extern float localY;
 extern float localTheta; // Radians
@@ -41,8 +41,6 @@ float calcYMovement(float radius, float alpha, float dT);
 
 bool calculateDeltas();
 
-bool calculatePosition();
-
-bool resetLocalPos();
+//bool calculatePosition();
 
 #endif
