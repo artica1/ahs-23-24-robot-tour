@@ -27,7 +27,7 @@ const unsigned int RIGHT_SERVO_NOMINAL = 88;
 const unsigned int LEFT_SERVO_OFFSET = 4;
 const unsigned int RIGHT_SERVO_OFFSET = 5;
 
-const unsigned int LEFT_SERVO_START = 1;
+const unsigned int LEFT_SERVO_START = 0;
 const unsigned int RIGHT_SERVO_START = 1;
 
 const unsigned int TURN_SPEED = 2;

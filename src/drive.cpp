@@ -114,7 +114,7 @@ bool driveStraight(int distance)
 
       flushMouseData(); // test before and after updating speeds
     }
-  } while (absoluteY < 500);
+  } while (absoluteTheta < PI/2);
 
   setServoSpeeds(0, 0);
 
