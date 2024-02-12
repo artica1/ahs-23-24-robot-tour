@@ -2,7 +2,6 @@
 #include "settings.h"
 #include "drive.h"
 #include "mouse.h"
-//#include "odometry.h"
 //#include "utils.h"
 
 void setup()
@@ -32,7 +31,7 @@ void loop()
 
   delay(1000);
 
-  turn(-PI/2);
+  driveStraight(112);
 
   delay(1000);
 }

@@ -30,9 +30,9 @@ float localTheta = 0;
 
 bool convertMouseData()
 {
-  // Ideally, the two x changes should be identical. If they are not, 
+  // Ideally, the two x changes should be identical. If they are not,
   // we take the higher one as mouse sensors may underestimate, but rarely overestimate
-  dxmm = maxMag(leftdxraw, rightdxraw) * MM_PER_COUNT; 
+  dxmm = (leftdxraw + rightdxraw) / 2 * MM_PER_COUNT;
   leftdymm = leftdyraw * MM_PER_COUNT * -1;
   rightdymm = rightdyraw * MM_PER_COUNT * -1;
 
@@ -94,7 +94,7 @@ bool calculateDeltas() // try and optimize this in the future, takes up signific
     radiusL = calcRadius(arclengthL, dTheta);
     radiusR = calcRadius(arclengthR, dTheta);
 
-    dx = (calcXMovement(radiusL, alphaL, dTheta, -SENSOR_DISTANCE/2) + calcXMovement(radiusR, alphaR, dTheta, SENSOR_DISTANCE/2)) / 2;
+    dx = (calcXMovement(radiusL, alphaL, dTheta, -SENSOR_DISTANCE / 2) + calcXMovement(radiusR, alphaR, dTheta, SENSOR_DISTANCE / 2)) / 2;
     dy = (calcYMovement(radiusL, alphaL, dTheta) + calcYMovement(radiusR, alphaR, dTheta)) / 2;
   }
 
