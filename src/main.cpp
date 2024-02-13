@@ -31,7 +31,15 @@ void loop()
 
   delay(1000);
 
-  driveStraight(112);
+  driveStraight(247);
+
+  delay(1000);
+
+  turnLeft(PI/2);
+
+  delay(1000);
+
+  driveStraight(247);
 
   delay(1000);
 }
